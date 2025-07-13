@@ -1,0 +1,9 @@
+# Ignore CLion / CMake build artifacts
+cmake-build-*/
+.idea/
+*.o
+*.obj
+*.exe
+*.log
+*.user
+.DS_Store
