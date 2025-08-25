@@ -9,7 +9,7 @@ class  OrderBook {
     public:
     void addOrder(const Order& newOrder);
     void removeOrder(const Order& order);
-    void matchOrder(Order orderToMatch);
+    void matchOrder(Order&  orderToMatch);
     void PrintOrderBook() const;
 
     private:

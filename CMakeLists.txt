@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 file(GLOB SOURCES "src/*.cpp")
 
 add_executable(marketSimulator ${SOURCES}
+        src/main.cpp
         headers/OrderBook.hpp
         src/OrderBook.cpp)
 
