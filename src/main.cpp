@@ -6,13 +6,32 @@
 
 
 int main() {
-    OrderBook orderBook;
-    Order orderOG(0,orderSide::SELL,OrderType::Market,50.3,5);
-    Order order1(1,orderSide::BUY,OrderType::Limit,50.4,10);
+    OrderBook ob;
 
-   orderBook.matchOrder(orderOG);
-    orderBook.matchOrder(order1);
-    std::cout<<order1.getQuantity()<<'\n';
+
+    Order buy1(5, orderSide::BUY, OrderType::Limit, 99.0, 2);
+    ob.matchOrder(buy1);
+    Order buy2(6, orderSide::BUY, OrderType::Limit, 98.5, 4);
+    ob.matchOrder(buy1);
+
+
+    Order marketSell(7, orderSide::SELL, OrderType::Market, 0, 10); // Price ignored
+    ob.matchOrder(marketSell);
+
+
+
+
+
+
+
+
+
+
+
+    // Print final state
+    ob.PrintOrderBook();
+
+    ob.printTradeHistory();
 
     return 0;
 }
