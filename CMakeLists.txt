@@ -9,7 +9,9 @@ file(GLOB SOURCES "src/*.cpp")
 add_executable(marketSimulator ${SOURCES}
         src/main.cpp
         headers/OrderBook.hpp
-        src/OrderBook.cpp)
+        src/OrderBook.cpp
+        src/marketSim.cpp
+        headers/marketSim.hpp)
 
 
 target_include_directories(marketSimulator PRIVATE headers)

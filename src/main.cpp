@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Order.hpp"
 #include "OrderBook.hpp"
-
+#include "marketSim.hpp"
 
 
 
@@ -18,10 +18,7 @@ int main() {
     Order marketSell(7, orderSide::SELL, OrderType::Market, 0, 10); // Price ignored
     ob.matchOrder(marketSell);
 
-
-
-
-
+    marketSim markSim;
 
 
 
@@ -32,6 +29,11 @@ int main() {
     ob.PrintOrderBook();
 
     ob.printTradeHistory();
+
+
+
+
+    markSim.runSimulation();
 
     return 0;
 }
