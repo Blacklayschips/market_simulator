@@ -10,7 +10,7 @@ class marketSim {
 public:
 
 
-    marketSim();
+    marketSim(OrderBook marketOrderBook,int priceOfMarket,int marketMoveUpCount,int marketMarketMoveDownCount);
     void runSimulation();
 
 
@@ -21,12 +21,10 @@ public:
 private:
 
 
-OrderBook orderBook;
-
-
-
-
-
+    OrderBook orderBook;
+    double marketPrice;
+    int marketMovingUpCount;
+    int marketMovingDownCount;
 
 };
 

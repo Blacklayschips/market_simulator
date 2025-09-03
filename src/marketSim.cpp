@@ -8,12 +8,12 @@
 
 
 
-marketSim::marketSim() {
+marketSim::marketSim(OrderBook marketsOrderBook,int marketPrice,int marketDirectionCountUp,int marketDirectionCountDown)
 
 
 
 
-};
+{};
 void marketSim::runSimulation() {
 
     using namespace std::chrono;
@@ -26,12 +26,29 @@ void marketSim::runSimulation() {
     while (isMarketRunning) {
 
 
+        double marketPriceBefore = marketPrice;
         auto start = high_resolution_clock::now();
 
         std::cout << "Perform orderbook things\n";
 
         auto end = high_resolution_clock::now();
         auto duration = end - start;
+
+
+        double marketPriceAfter = marketPrice;
+
+        if (marketPriceAfter>marketPriceBefore) {
+
+            marketMovingUpCount++;
+        } else if (marketPriceBefore>marketPriceAfter) {
+            marketMovingDownCount++;
+        }
+
+        if (marketMovingUpCount==5) {
+            marketMovingUpCount=0;
+        }else if (marketMovingDownCount==5) {
+            marketMovingDownCount=0;
+        }
 
         if (duration < ticktime) {
             std::this_thread::sleep_for(ticktime - duration);

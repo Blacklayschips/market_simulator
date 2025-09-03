@@ -18,7 +18,9 @@ int main() {
     Order marketSell(7, orderSide::SELL, OrderType::Market, 0, 10); // Price ignored
     ob.matchOrder(marketSell);
 
-    marketSim markSim;
+    marketSim markSim(ob,100,0,0);
+
+
 
 
 
