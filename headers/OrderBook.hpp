@@ -22,8 +22,8 @@ class  OrderBook {
     public:
     void addOrder(const Order& newOrder);
     void removeOrder(const Order& order);
-    void matchOrder(Order&  orderToMatch);
-    void matchMarketOrder(Order&  orderToMatch);
+    void matchOrder(Order&  orderToMatch,double& marketPrice);
+    void matchMarketOrder(Order&  orderToMatch,double& marketPrice);
 
     void PrintOrderBook() const;
     void printTradeHistory() const;

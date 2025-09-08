@@ -72,7 +72,7 @@ void OrderBook::PrintOrderBook() const {
 }
 
 
-void OrderBook::matchMarketOrder(Order& marketOrder) {
+void OrderBook::matchMarketOrder(Order& marketOrder,double& marketPrice) {
     if (marketOrder.getSide()==orderSide::BUY) {
         for (auto it = sellOrders.begin(); it != sellOrders.end() && marketOrder.getQuantity() > 0;) {
             auto &[priceatLevel,sellOrdersAtLevel] = *it;
@@ -93,6 +93,7 @@ void OrderBook::matchMarketOrder(Order& marketOrder) {
                 marketOrder.setQuantity(marketOrder.getQuantity() - tradedQuantity);
                 indiSellOrder->setQuantity(indiSellOrder->getQuantity() - tradedQuantity);
 
+                marketPrice = indiSellOrder->getPrice();
 
                 if (indiSellOrder->getQuantity() == 0) {
                     indiSellOrder = sellOrdersAtLevel.erase(indiSellOrder);
@@ -128,6 +129,8 @@ void OrderBook::matchMarketOrder(Order& marketOrder) {
                 marketOrder.setQuantity(marketOrder.getQuantity() - tradedQuantity);
                 indiBuyOrder->setQuantity(indiBuyOrder->getQuantity() - tradedQuantity);
 
+                marketPrice = indiBuyOrder->getPrice();
+
                 if (indiBuyOrder->getQuantity() == 0) {
                     indiBuyOrder = buyOrdersAtLevel.erase(indiBuyOrder);
                 } else {
@@ -153,10 +156,10 @@ void OrderBook::matchMarketOrder(Order& marketOrder) {
 
 
 
-void OrderBook::matchOrder(Order &orderToMatch) {
+void OrderBook::matchOrder(Order &orderToMatch,double& marketPrice) {
 
     if (orderToMatch.getType()==OrderType::Market) {
-        matchMarketOrder(orderToMatch);
+        matchMarketOrder(orderToMatch,marketPrice);
         return;
     }
 
@@ -184,6 +187,7 @@ void OrderBook::matchOrder(Order &orderToMatch) {
                     orderToMatch.setQuantity(orderToMatch.getQuantity() - tradedQuantity);
                     indiSellOrder->setQuantity(indiSellOrder->getQuantity() - tradedQuantity);
 
+                    marketPrice = indiSellOrder->getPrice();
 
                     if (indiSellOrder->getQuantity() == 0) {
                         indiSellOrder = sellOrdersAtLevel.erase(indiSellOrder);
@@ -222,6 +226,7 @@ void OrderBook::matchOrder(Order &orderToMatch) {
                     orderToMatch.setQuantity(orderToMatch.getQuantity() - tradedQuantity);
                     indiBuyOrder->setQuantity(indiBuyOrder->getQuantity() - tradedQuantity);
 
+                    marketPrice= indiBuyOrder->getPrice();
 
                     if (indiBuyOrder->getQuantity() == 0) {
                         indiBuyOrder = buyOrdersAtLevel.erase(indiBuyOrder);

@@ -5,7 +5,14 @@
 #include <random>
 #include <optional>
 
+int Trader::getTraderID()const {
 
+    return traderID;
+
+}
+typeOfTrader Trader::getType()const {
+    return traderType;
+}
 std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,int marketDirectionCountUp,int marketDirectionCountDown) {
 
 
@@ -13,9 +20,37 @@ std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,
     std::mt19937 gen(rd());
 
     orderSide BuyOrSellSide;
-    if (traderType!=typeOfTrader::Momentum) {
-        std::uniform_int_distribution<int> distribution(0, 1);
-         BuyOrSellSide = distribution(gen) ? orderSide::SELL : orderSide::BUY;
+    OrderType typeOfOrder;
+
+    std::uniform_int_distribution<int> distribution(0, 9);
+    if (distribution(gen) != 0) {
+        typeOfOrder =OrderType::Limit;
+    }else {
+        typeOfOrder = OrderType::Market;
+    }
+
+
+
+    BuyOrSellSide = orderSide::BUY;
+
+    if (traderType==typeOfTrader::Retail) {
+        std::uniform_int_distribution<int> distribution(0, 3);
+        if (distribution(gen) != 0) return std::nullopt;
+        std::uniform_int_distribution<int> distribution2(0, 1);
+        if (distribution2(gen) != 0) {
+            BuyOrSellSide = orderSide::BUY;
+        }else {
+            BuyOrSellSide = orderSide::SELL;
+        }
+    }else if (traderType==typeOfTrader::Whale) {
+        std::uniform_int_distribution<int> distribution(0, 5);
+        if (distribution(gen) != 0) return std::nullopt;
+        std::uniform_int_distribution<int> distribution2(0, 1);
+        if (distribution2(gen) != 0) {
+            BuyOrSellSide = orderSide::BUY;
+        }else {
+            BuyOrSellSide = orderSide::SELL;
+        }
     }else {
 
         if (marketDirectionCountUp>=10) {
@@ -28,11 +63,7 @@ std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,
             std::uniform_int_distribution<int> distribution(0, 3);
             if (distribution(gen) != 0) return std::nullopt;
             BuyOrSellSide = orderSide::BUY;
-        }
-
-
-
-        if (marketDirectionCountDown>=10) {
+        }else if (marketDirectionCountDown>=10) {
             BuyOrSellSide = orderSide::SELL;
         } else if (marketDirectionCountDown>=8) {
             std::uniform_int_distribution<int> distribution(0, 1);
@@ -54,7 +85,7 @@ std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,
 
 
 
-    return Order(orderID,BuyOrSellSide,OrderType::Limit,priceToTrade,quantityToTrade);
+    return Order(orderID,BuyOrSellSide,typeOfOrder,priceToTrade,quantityToTrade);
 
 }
 
@@ -63,7 +94,7 @@ std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,
 
 
 
-Trader::Trader(int id,double marketPrice, typeOfTrader type):traderID(id),traderType(type),priceChosen(marketPrice),quantity(generateQuantity(type))
+Trader::Trader(int id, typeOfTrader type):traderID(id),traderType(type)
 {}
     
 

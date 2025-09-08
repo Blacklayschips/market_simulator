@@ -12,14 +12,13 @@ enum class typeOfTrader {
 class Trader {
 
 public:
-    Trader(int id,double marketPrice,typeOfTrader type);
+    Trader(int id,typeOfTrader type);
     std::optional<Order> generateOrder(int orderID,double curentMarketPrice,int marketDirectionCountUp,int marketDirectionCountDown);
-
+    int getTraderID()const;
+    typeOfTrader getType()const;
 private:
     int traderID;
     typeOfTrader traderType;
-    int priceChosen;
-    int quantity;
     double generateRandomPrice(double priceLevel);
     int generateQuantity(typeOfTrader trader_type);
 
