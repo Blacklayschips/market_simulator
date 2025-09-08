@@ -163,7 +163,7 @@ void OrderBook::matchOrder(Order &orderToMatch,double& marketPrice) {
         return;
     }
 
-
+//
     if (orderToMatch.getSide() == orderSide::BUY) {
         for (auto it = sellOrders.begin(); it != sellOrders.end() && orderToMatch.getQuantity() > 0;) {
             auto &[priceatLevel,sellOrdersAtLevel] = *it;

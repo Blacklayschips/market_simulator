@@ -48,7 +48,7 @@ void marketSim::runSimulation() {
                 std::cout<<"Price of order being added is"<<maybeOrder->getPrice()<<'\n';
                 std::cout<<"Quantity of the order being added/matched is "<< maybeOrder->getQuantity()<<'\n';
                 if (maybeOrder->getSide()==orderSide::BUY) {
-                    std::cout<<"Type of order is a buy order"<<'\n';
+                    std::cout<<"Type of order is a buy orderr"<<'\n';
                 }else {
                     std::cout<<"Type of order is a sell order"<<'\n';
                 }

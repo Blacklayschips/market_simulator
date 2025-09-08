@@ -32,4 +32,4 @@ public:
     void setTimestamp(std::chrono::high_resolution_clock::time_point newTimestamp);
 
 
-};
+};//
