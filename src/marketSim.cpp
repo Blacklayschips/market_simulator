@@ -50,7 +50,7 @@ void marketSim::runSimulation() {
 
         for (Trader& trader : traders) {
 
-            auto maybeOrder = trader.generateOrder(trader.getTraderID(),marketPrice,marketMovingDownCount,marketMovingUpCount);
+            auto maybeOrder = trader.generateOrder(trader.getTraderID(),marketPrice,marketMovingDownCount,marketMovingUpCount,marketAveragePrice);
             if (maybeOrder) {
                 //std::cout<<"Current market price is  "<<marketPrice<<'\n';
                 //std::cout<<"Price of order being added is"<<maybeOrder->getPrice()<<'\n';
@@ -73,6 +73,7 @@ void marketSim::runSimulation() {
                 }
 
                 volumeInTick += maybeOrder->getQuantity();
+                std::cout<<"average Price is "<<marketAveragePrice<<'\n';
             }
 
         }
@@ -92,7 +93,7 @@ void marketSim::runSimulation() {
         }else {
             marketAveragePrice = (((marketAveragePrice*amountOfTicks)+marketPrice)/(amountOfTicks+1));
         }
-        std::cout<<"average Price is "<<marketAveragePrice<<'\n';
+
         amountOfTicks++;
 
 

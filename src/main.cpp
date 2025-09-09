@@ -25,6 +25,9 @@ int main() {
     for ( i = 3750 ; i < 4000 ; i++) {
         traders.emplace_back(i,typeOfTrader::Whale);
     }
+    for ( i = 4000 ; i < 5000 ; i++) {
+        traders.emplace_back(i,typeOfTrader::dipBuyer);
+    }
 
     markSim.addTraders(traders);
 

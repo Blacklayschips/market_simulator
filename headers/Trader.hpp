@@ -13,7 +13,7 @@ class Trader {
 
 public:
     Trader(int id,typeOfTrader type);
-    std::optional<Order> generateOrder(int orderID,double curentMarketPrice,int marketDirectionCountUp,int marketDirectionCountDown);
+    std::optional<Order> generateOrder(int orderID,double curentMarketPrice,int marketDirectionCountUp,int marketDirectionCountDown,double marketAverage);
     int getTraderID()const;
     typeOfTrader getType()const;
 private:

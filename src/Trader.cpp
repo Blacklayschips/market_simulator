@@ -13,7 +13,7 @@ int Trader::getTraderID()const {
 typeOfTrader Trader::getType()const {
     return traderType;
 }
-std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,int marketDirectionCountUp,int marketDirectionCountDown) {
+std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,int marketDirectionCountUp,int marketDirectionCountDown,double marketAverage) {
 
 
     std::random_device rd;
@@ -29,29 +29,35 @@ std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,
         typeOfOrder = OrderType::Market;
     }
 
-
-
     BuyOrSellSide = orderSide::BUY;
+
+    //all trades other than momentum and dipBuyer have a 1/2 of being a buy or a sell order
+    if (traderType!=typeOfTrader::Momentum&&traderType!=typeOfTrader::dipBuyer) {
+        std::uniform_int_distribution<int> distribution2(0, 1);
+        if (distribution2(gen) != 0) {
+            BuyOrSellSide = orderSide::BUY;
+        }else {
+            BuyOrSellSide = orderSide::SELL;
+        }
+    }
+
+
 
     if (traderType==typeOfTrader::Retail) {
         std::uniform_int_distribution<int> distribution(0, 3);
         if (distribution(gen) != 0) return std::nullopt;
-        std::uniform_int_distribution<int> distribution2(0, 1);
-        if (distribution2(gen) != 0) {
-            BuyOrSellSide = orderSide::BUY;
-        }else {
-            BuyOrSellSide = orderSide::SELL;
-        }
+
     }else if (traderType==typeOfTrader::Whale) {
         std::uniform_int_distribution<int> distribution(0, 5);
         if (distribution(gen) != 0) return std::nullopt;
-        std::uniform_int_distribution<int> distribution2(0, 1);
-        if (distribution2(gen) != 0) {
-            BuyOrSellSide = orderSide::BUY;
-        }else {
-            BuyOrSellSide = orderSide::SELL;
-        }
-    }else {
+        //if the price of the market is down more than a quarter from average dipBuyers will spring into action
+    }else if (traderType==typeOfTrader::dipBuyer&&((1-(curentMarketPrice/marketAverage))>=0.25)){
+        std::uniform_int_distribution<int> distribution(0, 1);
+        if (distribution(gen) != 0) return std::nullopt;
+        std::cout<<"Added dipbuyer"<<"'\n";
+    }
+
+    else {
 
         if (marketDirectionCountUp>=10) {
             BuyOrSellSide = orderSide::BUY;
@@ -116,7 +122,11 @@ int Trader::generateQuantity(typeOfTrader type) {
     if (type==typeOfTrader::Retail||type==typeOfTrader::Momentum) {
         std::uniform_int_distribution<int> distribution(0, 60);
          quantitytoTrade = distribution(gen);
-    } else if (type==typeOfTrader::Whale) {
+    } else if (type==typeOfTrader::dipBuyer) {
+        std::uniform_int_distribution<int> distribution(100, 400);
+        quantitytoTrade = distribution(gen);
+    }
+        else if (type==typeOfTrader::Whale) {
 
         std::uniform_int_distribution<int> distribution(1000, 50000);
          quantitytoTrade = distribution(gen);
