@@ -16,13 +16,13 @@ int main() {
     std::vector<Trader> traders;
     //trader ID
     int i =0;
-    for ( i = 0 ; i < 1000 ; i++) {
+    for ( i = 0 ; i < 3000 ; i++) {
         traders.emplace_back(i,typeOfTrader::Retail);
     }
-    for ( i = 1000 ; i < 2000 ; i++) {
+    for ( i =3000 ; i < 3750 ; i++) {
         traders.emplace_back(i,typeOfTrader::Momentum);
     }
-    for ( i = 2000 ; i < 2500 ; i++) {
+    for ( i = 3750 ; i < 4000 ; i++) {
         traders.emplace_back(i,typeOfTrader::Whale);
     }
 

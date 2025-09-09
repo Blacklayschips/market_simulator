@@ -5,8 +5,8 @@
 enum class typeOfTrader {
     Retail,
     Whale,
-    Momentum
-
+    Momentum,
+    dipBuyer
 };
 
 class Trader {
