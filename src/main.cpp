@@ -6,6 +6,7 @@
 
 
 int main() {
+    std::remove("candles.csv");
     OrderBook ob;
 
 
@@ -15,13 +16,13 @@ int main() {
     std::vector<Trader> traders;
     //trader ID
     int i =0;
-    for ( i = 0 ; i < 10 ; i++) {
+    for ( i = 0 ; i < 1000 ; i++) {
         traders.emplace_back(i,typeOfTrader::Retail);
     }
-    for ( i = 10 ; i < 20 ; i++) {
+    for ( i = 1000 ; i < 2000 ; i++) {
         traders.emplace_back(i,typeOfTrader::Momentum);
     }
-    for ( i = 20 ; i < 25 ; i++) {
+    for ( i = 2000 ; i < 2500 ; i++) {
         traders.emplace_back(i,typeOfTrader::Whale);
     }
 

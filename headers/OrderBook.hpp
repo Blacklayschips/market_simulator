@@ -4,6 +4,7 @@
 #include "Order.hpp"
 #include <map>
 
+
 struct tradeRecord {
 
     int buyOrderID;
@@ -24,6 +25,10 @@ class  OrderBook {
     void removeOrder(const Order& order);
     void matchOrder(Order&  orderToMatch,double& marketPrice);
     void matchMarketOrder(Order&  orderToMatch,double& marketPrice);
+
+
+
+
 
     void PrintOrderBook() const;
     void printTradeHistory() const;

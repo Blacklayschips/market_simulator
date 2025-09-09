@@ -22,7 +22,7 @@ std::optional<Order> Trader::generateOrder(int orderID,double curentMarketPrice,
     orderSide BuyOrSellSide;
     OrderType typeOfOrder;
 
-    std::uniform_int_distribution<int> distribution(0, 9);
+    std::uniform_int_distribution<int> distribution(0, 1);
     if (distribution(gen) != 0) {
         typeOfOrder =OrderType::Limit;
     }else {

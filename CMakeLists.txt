@@ -13,7 +13,9 @@ add_executable(marketSimulator ${SOURCES}
         src/marketSim.cpp
         headers/marketSim.hpp
         src/Trader.cpp
-        headers/Trader.hpp)
+        headers/Trader.hpp
+        headers/Candlestick.hpp
+)
 
 
 target_include_directories(marketSimulator PRIVATE headers)

@@ -3,7 +3,7 @@
 #include <thread>
 #include <iostream>
 #include <chrono>
-
+#include "Candlestick.hpp"
 
 
 double marketSim::getPriceOfMarket()const {
@@ -28,14 +28,20 @@ void marketSim::runSimulation() {
     using namespace std::chrono;
     using namespace std::literals::chrono_literals;
 
-    auto ticktime = 100ms;
+    auto ticktime = 1000ms;
     bool isMarketRunning = true;
 
     std::cout<<"Current market price is  "<<marketPrice<<'\n';
     while (isMarketRunning) {
 
 
+        double marketHigh = marketPrice;
+        double marketLow = marketPrice;
+
         double marketPriceBefore = marketPrice;
+
+        int volumeInTick = 0;
+
         auto start = high_resolution_clock::now();
 
         std::cout << "Perform orderbook things\n";
@@ -53,10 +59,22 @@ void marketSim::runSimulation() {
                     std::cout<<"Type of order is a sell order"<<'\n';
                 }
 
+
+
+
                 orderBook.matchOrder(*maybeOrder,marketPrice);
+                // gets the maxiumum and minimum priced trade in every cycle
+                if (marketPrice>marketHigh) {
+                    marketHigh = marketPrice;
+                }else if (marketPrice<marketLow) {
+                    marketLow = marketPrice;
+                }
+
+                volumeInTick += maybeOrder->getQuantity();
             }
 
         }
+
 
 
         orderBook.PrintOrderBook();
@@ -67,6 +85,18 @@ void marketSim::runSimulation() {
 
         double marketPriceAfter = marketPrice;
 
+
+
+        Candlestick singlecandle {
+            marketPriceBefore,
+            marketPriceAfter,
+            marketHigh,
+            marketLow,
+            volumeInTick,
+            std::chrono::system_clock::now()
+        };
+
+        writeCandleToCSV(singlecandle);
         if (marketPriceAfter>marketPriceBefore) {
 
             marketMovingUpCount++;
